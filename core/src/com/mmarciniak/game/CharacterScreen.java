@@ -5,7 +5,6 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -17,18 +16,15 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 public class CharacterScreen implements Screen,InputProcessor {
 
     private BeanGame game;
-    Sprite bg;
-    Stage characterStage;
-    Bird bird;
-    Table table;
-    TextButton yellowBird;
-    TextButton blueBird;
-    TextButton playButton;
+    private Stage characterStage;
+    private Table table;
+    private TextButton yellowBird;
+    private TextButton blueBird;
+    private TextButton playButton;
 
     public CharacterScreen(final BeanGame game) {
         this.game = game;
         this.characterStage=new Stage(new ScreenViewport());
-        this.bird = new Bird();
         this.table = new Table();
         table.setWidth(Gdx.graphics.getWidth());
         table.align(Align.center | Align.top);
@@ -36,7 +32,7 @@ public class CharacterScreen implements Screen,InputProcessor {
         yellowBird.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                bird.setBirdTexture(new Texture("bird.png"));
+                game.bird.setBirdTexture(new Texture("bird.png"));
                 event.stop();
             }
         });
@@ -44,10 +40,18 @@ public class CharacterScreen implements Screen,InputProcessor {
         blueBird.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                bird.setBirdTexture(new Texture("bluebird.png"));
+                game.bird.setBirdTexture(new Texture("bluebird.png"));
+                event.stop();
             }
         });
         this.playButton =new TextButton("PLAY",game.skin);
+        playButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(new PlayScreen(game));
+                event.stop();
+            }
+        });
         table.setPosition(0,Gdx.graphics.getHeight());
         table.padTop(30);
         table.add(yellowBird).width(Gdx.graphics.getWidth()/5).height(200).padBottom(50);
@@ -71,7 +75,8 @@ public class CharacterScreen implements Screen,InputProcessor {
     @Override
     public void render(float delta) {
         game.batch.begin();
-        game.batch.draw(bird.getBirdTexture(),bird.getBirdX(),bird.getBirdY());
+        game.bg.draw(game.batch);
+        game.batch.draw(game.bird.getBirdTexture(),game.bird.getBirdX(),game.bird.getBirdY());
         game.batch.end();
 
         characterStage.act();
@@ -95,7 +100,7 @@ public class CharacterScreen implements Screen,InputProcessor {
 
     @Override
     public void hide() {
-
+        characterStage.dispose();
     }
 
     @Override

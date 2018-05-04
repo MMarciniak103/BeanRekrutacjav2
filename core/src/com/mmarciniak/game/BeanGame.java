@@ -13,6 +13,7 @@ public class BeanGame extends Game{
 	public SpriteBatch batch;
 	public Sprite bg;
 	public Skin skin;
+	public Bird bird;
 
 	
 	@Override
@@ -22,6 +23,7 @@ public class BeanGame extends Game{
 		setScreen(new LoginScreen(this));
 		bg=new Sprite(new Texture("bg.png"));
 		bg.setSize(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+        bird=new Bird();
 
 	}
 
@@ -34,7 +36,7 @@ public class BeanGame extends Game{
 	
 	@Override
 	public void dispose () {
-		batch.dispose();
+	    batch.dispose();
 
 	}
 }

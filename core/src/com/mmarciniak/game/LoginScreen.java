@@ -22,11 +22,11 @@ import sun.rmi.runtime.Log;
 public class LoginScreen implements Screen,InputProcessor {
 
     private BeanGame game;
-    Stage loginStage;
-    TextField login;
-    TextField password;
-    Table table1;
-    TextButton loginButton;
+    private Stage loginStage;
+    private TextField login;
+    private TextField password;
+    private Table table1;
+    private TextButton loginButton;
 
     public LoginScreen(final BeanGame game){
         this.game=game;
@@ -38,6 +38,7 @@ public class LoginScreen implements Screen,InputProcessor {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if(login.getText().equals("mm") && password.getText().equals("123")){
+                    Gdx.input.setOnscreenKeyboardVisible(false);
                     game.setScreen(new CharacterScreen(game));
                 }
                 event.stop();
@@ -96,7 +97,7 @@ public class LoginScreen implements Screen,InputProcessor {
 
     @Override
     public void hide() {
-
+        loginStage.dispose();
     }
 
     @Override
