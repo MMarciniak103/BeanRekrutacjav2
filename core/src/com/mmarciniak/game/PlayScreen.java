@@ -5,6 +5,7 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -63,6 +64,8 @@ public class PlayScreen implements Screen, InputProcessor {
 
     @Override
     public void render(float delta) {
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         if(score>2) game.bg.setTexture(new Texture("mariobg.png"));
         else game.bg.setTexture(new Texture("bg.png"));
         if (gamestate == 0) {
@@ -203,7 +206,7 @@ public class PlayScreen implements Screen, InputProcessor {
 
     @Override
     public void hide() {
-
+        this.dispose();
     }
 
     @Override
