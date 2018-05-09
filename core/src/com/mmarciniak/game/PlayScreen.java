@@ -97,6 +97,7 @@ public class PlayScreen implements Screen, InputProcessor {
                 if (tube.TubeX[i] < -tube.getTopTube().getWidth()) {
                     tube.TubeX[i] += tube.getTubeNumber() * tube.getTubeDistance();
                     tube.topTubeY[i] = Gdx.graphics.getHeight() / 2 + tube.TubeGap[i] / 2;
+                    tube.botTubeY[i]=Gdx.graphics.getHeight()/2-tube.TubeGap[i]/2-tube.getBotTube().getHeight();
                 } else {
                     tube.TubeX[i] -= tube.getVelocity();
                 }

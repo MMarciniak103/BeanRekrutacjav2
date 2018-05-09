@@ -103,8 +103,8 @@ public class CharacterScreen implements Screen,InputProcessor {
 
     @Override
     public void hide() {
-       // characterStage.dispose();
-        this.dispose();
+        characterStage.dispose();
+       // this.dispose();
     }
 
     @Override
