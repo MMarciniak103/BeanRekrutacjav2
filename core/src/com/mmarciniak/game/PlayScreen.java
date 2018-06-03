@@ -3,6 +3,7 @@ package com.mmarciniak.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -25,6 +26,7 @@ public class PlayScreen implements Screen, InputProcessor {
     private ShapeRenderer shapeRenderer;
     private BitmapFont font1,font2;
     private Texture gameover;
+    private int highscore;
 
     public PlayScreen(final BeanGame game) {
         this.game = game;
@@ -126,10 +128,17 @@ public class PlayScreen implements Screen, InputProcessor {
             font1.draw(game.batch,String.valueOf(score),200,200);
             game.batch.end();
         }else if(gamestate==2){
+            Preferences prefs=Gdx.app.getPreferences("beangame");
+            this.highscore=prefs.getInteger("highscore",0);
+            if(score>highscore){
+                prefs.putInteger("highscore",score);
+                prefs.flush();
+            }
             game.batch.begin();
             game.bg.draw(game.batch);
             game.batch.draw(gameover, Gdx.graphics.getWidth() / 2 - gameover.getWidth() / 2, Gdx.graphics.getHeight() / 2 - gameover.getHeight() / 2);
             font2.draw(game.batch, "YOUR SCORE: " + String.valueOf(score), Gdx.graphics.getWidth() / 5, Gdx.graphics.getHeight() * 3 / 4);
+            font2.draw(game.batch,"HIGHSCORE "+String.valueOf(highscore),Gdx.graphics.getWidth()/5,Gdx.graphics.getHeight()*1/5);
 
             if (Gdx.input.justTouched()) {
                 gamestate = 0;
